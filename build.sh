@@ -3,7 +3,9 @@
 # cross compiler.  Requires: gcc-mingw-w64-i686 (Debian/Ubuntu) or an
 # equivalent i686-w64-mingw32-gcc.
 #
-#   ./build.sh            -> out/fitouch2.dll
+#   ./build.sh            -> out/fitouch2-air-polling.dll
+#                            out/fitouch2-air-blocking.dll
+#                            out/fitouch2.dll (same as AIR blocking)
 #
 set -euo pipefail
 
@@ -29,11 +31,19 @@ SOURCES=(
     src/dllmain.c
 )
 
-"$CC" $CFLAGS -shared -o "$OUT/fitouch2.dll" \
-    -Wl,--kill-at \
-    "${SOURCES[@]}" \
-    nicochuniio.def \
-    -lsetupapi -lhid -lwinmm \
-    -static-libgcc
+build_variant() {
+    local output="$1"
+    shift
+    "$CC" $CFLAGS "$@" -shared -o "$OUT/$output" \
+        -Wl,--kill-at \
+        "${SOURCES[@]}" \
+        nicochuniio.def \
+        -lsetupapi -lhid -lwinmm \
+        -static-libgcc
+    echo "built: $OUT/$output"
+}
 
-echo "built: $OUT/fitouch2.dll"
+build_variant fitouch2-air-polling.dll
+build_variant fitouch2-air-blocking.dll -DAIR_BLOCKING_READ
+cp "$OUT/fitouch2-air-blocking.dll" "$OUT/fitouch2.dll"
+echo "built: $OUT/fitouch2.dll (AIR blocking default)"

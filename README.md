@@ -30,8 +30,13 @@ build.sh                  构建脚本
 WSL/Debian:
 ```bash
 sudo apt-get install gcc-mingw-w64-i686
-./build.sh          # 产物: out/fitouch2.dll (i386)
+./build.sh          # 产物: out/fitouch2-air-polling.dll 和
+                    #       out/fitouch2-air-blocking.dll (i386)
 ```
+
+`fitouch2-air-polling.dll` 按原版方式非阻塞轮询 AIR HID 报告；
+`fitouch2-air-blocking.dll` 在报告尚未到达时阻塞等待。默认的
+`fitouch2.dll` 与阻塞版相同；需要对照测试时可改用非阻塞轮询版。
 
 Windows 原生:安装 [MSYS2](https://www.msys2.org) 后在 MinGW32 shell 里
 用同样的命令行编译(去掉 build.sh 里的包装即可)。
@@ -42,8 +47,7 @@ Windows 原生:安装 [MSYS2](https://www.msys2.org) 后在 MinGW32 shell 里
    `bin\fitouch2.dll` → `bin\fitouch2.dll.orig`
 2. 复制 `out\fitouch2.dll` 到游戏 `bin\` 目录。
 3. 启动游戏验证:
-   - 任务管理器中 chusanApp 的 CPU 占用应明显下降(原版两个 100% 轮询
-     线程变为接近 0);
+   - 任务管理器中 chusanApp 的 CPU 占用应明显下降;
    - 菜单静置后再触摸,输入应立即响应(无秒级延迟);
    - 调试输出("使用IO4模式模拟AIR"等)与原版相同。
 

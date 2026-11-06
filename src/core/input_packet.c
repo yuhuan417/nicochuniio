@@ -170,10 +170,19 @@ BOOL process_io4_data(void)
 
     {
         DWORD bytes = 0;
-        if (!GetOverlappedResult(hHidDevice, &ov, &bytes, FALSE)) {
+        /* The blocking build waits for this HID report; the default build
+         * mirrors the original worker's non-blocking completion polling. */
+#ifdef AIR_BLOCKING_READ
+        const BOOL wait_for_report = TRUE;
+#else
+        const BOOL wait_for_report = FALSE;
+#endif
+        if (!GetOverlappedResult(hHidDevice, &ov, &bytes, wait_for_report)) {
+#ifndef AIR_BLOCKING_READ
             DWORD err = GetLastError();
             if (err == ERROR_IO_INCOMPLETE)
                 return FALSE;
+#endif
             goto fail;
         }
 
