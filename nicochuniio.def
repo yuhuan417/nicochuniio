@@ -1,0 +1,63 @@
+LIBRARY fitouch2
+EXPORTS
+    AIR_status                    DATA
+    GetHidDevicePathByVidPid
+    GetSerialPortByVidPid
+    HardwareInit                  DATA
+    IsHidDeviceOpen
+    IsSerialPortOpen
+    LED_status                    DATA
+    chuni_io_cfg                  DATA
+    chuni_io_config_load
+    chuni_io_get_api_version
+    chuni_io_jvs_init
+    chuni_io_jvs_poll
+    chuni_io_jvs_read_coin_counter
+    chuni_io_led_init
+    chuni_io_led_set_colors
+    chuni_io_slider_init
+    chuni_io_slider_set_leds
+    chuni_io_slider_start
+    chuni_io_slider_stop
+    close_hid_device
+    close_port
+    comPort                       DATA
+    connect_hid_device
+    connect_serial_port
+    createQueue
+    cs                            DATA
+    cursor_init
+    data_reader
+    dequeue
+    dcb                           DATA
+    enqueue
+    f_air_led_report_L
+    f_air_led_report_R
+    f_disable_slider_report
+    f_enable_air_report
+    f_enable_slider_report
+    f_get_hardware_info
+    f_reset
+    f_slider_led_report
+    hHidDevice                    DATA
+    hPort                         DATA
+    hid_mutex                     DATA
+    io4_JVS_FSM
+    io4_cs                        DATA
+    io4_received_data             DATA
+    io4_switches_to_beams
+    isEmpty
+    isFull
+    open_hid_device
+    open_port
+    output_packet
+    pack_data
+    packet_init
+    process_io4_data
+    process_serial_data
+    report_init
+    request                       DATA
+    send_packet
+    serial_mutex                  DATA
+    serial_read_cmd
+    timeouts                      DATA
